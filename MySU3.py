@@ -22,69 +22,13 @@ def su3(data):
     R = A / float(total)
     
 ####################
+
+	P = np.dot(R, np.ones((n)))
     
-    XMEAN = np.zeros((K, nc))
-#
-#    for i in range(nr):
-#        k = label[i];
-#        NS[k] = NS[k] + 1
-#        for j in range(nc):
-#            XMEAN[k,j] = XMEAN[k,j] + data[i,j]
-#
-#    for k in range(K):
-#        omega = NS[k]
-#        for j in range(nc):
-#            XMEAN[k,j] = XMEAN[k,j] / omega
-#
-#    print 'Class Means'
-#    print XMEAN
-    
-    NE = np.zeros((K))
-    for k in range(K):
-        NE[k] = sum(label == k)
-
-    for k in range(K):
-        XMEAN[k,:] = np.dot(data[ label == k, :].T, np.ones((int(NE[k])))).T / float(NE[k])
-
-#    print 'Class Means'
-#    print XMEAN
-
-    # Between Class Covariance Matrix
-#    Sb = np.zeros((nc, nc))
-#    for k in range(K):
-#        omega = sum(label == k) / float(nr)
-#        for i in range(nc):
-#            for j in range(nc):
-#                Sb[i,j] = Sb[i,j] + omega * (XMEAN[k,i] - TMEAN[i])  * (XMEAN[k,j] - TMEAN[j])
-#
-#    print 'Between Class Covariance Matrix'
-#    print Sb
-
-#    alpha = 0.001
-
-    Sb = np.zeros((nc, nc))
-
-    for k in range(K):
-        omega = float(NE[k]) / float(nr)
-        xmean_m = XMEAN[k,:] - TMEAN
-        Sb = Sb + omega * np.outer(xmean_m, xmean_m)
-    
-#    print 'Between Class Covariance Matrix'
-#    print Sb.dtype
-#    print Sb
-
-    Sw = St - Sb
-
-#    Sw = Sw + alpha * np.eye(nc)
-
-#    print 'Within Class Covariance Matrix'
-#    print Sw.dtype
-#    print Sw
-
-    Eval, Evec = klin.pencil(Sb,Sw)
+    Q = np.dot(np.ones((m)), R)
 
 
-    return (Eval[:ldim], Evec[:,:ldim], TMEAN, XMEAN)
+    return (R, P, Q)
 
 
 ###
