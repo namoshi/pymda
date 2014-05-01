@@ -23,7 +23,7 @@ def su3(data):
     
 ####################
 
-	P = np.dot(R, np.ones((n)))
+    P = np.dot(R, np.ones((n)))
     
     Q = np.dot(np.ones((m)), R)
 
