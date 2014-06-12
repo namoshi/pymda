@@ -19,16 +19,16 @@ def pca(src,dim):
 
         if shape[0] < dim: dim=shape[0]
         
-        print>>sys.stderr,"covariance matrix ...",
+#        print>>sys.stderr,"covariance matrix ...",
         n=np.dot(src_m.T, src_m)/float(shape[0])
-        print>>sys.stderr,"done"
+#        print>>sys.stderr,"done"
  
-        print>>sys.stderr,"eigen value decomposition ...",
+#        print>>sys.stderr,"eigen value decomposition ...",
         l,v=np.linalg.eig(n)
         idx= l.argsort()
         l = l[idx][::-1]
         v = v[:,idx][:,::-1]
-        print>>sys.stderr,"done"
+#        print>>sys.stderr,"done"
  
         vm=np.dot(src_m, v)
         for i in range(len(l)):
@@ -37,12 +37,12 @@ def pca(src,dim):
                 l=l[:i]
                 if dim < i: dim=i
                 break
-
-        vm[:,i]=vm[:,i]/np.sqrt(shape[0]*l[i])
+            vm[:,i]=vm[:,i]/np.sqrt(shape[0]*l[i])
  
     else: # number of sample >= dimention
  
         if shape[1] < dim: dim=shape[1]
+        
         cov=np.dot(src_m, src_m.T)/float(shape[0])
         l,vm = np.linalg.eig(cov)
         idx= l.argsort()
